@@ -1,0 +1,140 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Purism-EV API",
+    "description": "",
+    "contact": {
+      "email": "service@purism-ev.com"
+    },
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "default",
+      "description": ""
+    }
+  ],
+  "paths": {
+    "/api/ext/measurements": {
+      "get": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Finds sensor measurements by device ID",
+        "operationId": "findMeasurements",
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "query",
+            "description": "Status values that need to be considered for filter",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Measurement"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid device ID provided"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Measurement": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "lCQ0RHRQHm0DdA5jNa82"
+          },
+          "deviceId": {
+            "type": "number",
+            "example": 3317583342
+          },
+          "Timestamp": {
+            "type": "number",
+            "example": 1712973411
+          },
+          "BatterySOC": {
+            "type": "number",
+            "example": 0
+          },
+          "Power": {
+            "type": "number",
+            "example": 0
+          },
+          "Voltage": {
+            "type": "number",
+            "example": 0
+          },
+          "Distance": {
+            "type": "number",
+            "example": 0
+          },
+          "Motor_Speed": {
+            "type": "number",
+            "example": 0
+          },
+          "Throttle_In_Percentage": {
+            "type": "number",
+            "example": 0
+          },
+          "Position_LAT": {
+            "type": "number",
+            "example": 0
+          },
+          "Position_LNG": {
+            "type": "number",
+            "example": 0
+          },
+          "Position_ALT": {
+            "type": "number",
+            "example": 0
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "api_key": {
+        "type": "apiKey",
+        "name": "x-api-key",
+        "in": "header"
+      }
+    }
+  }
+}

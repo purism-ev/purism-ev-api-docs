@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Purism-EV API" />
+
+    <meta property="og:title" content="Purism-EV API" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://apidocs.purism-ev.cloud" />
+    <meta
+      property="og:image"
+      content="https://apidocs.purism-ev.cloud/public/logo192.png"
+    />
+    <meta
+      property="og:description"
+      content="Purism-EV API"
+    />
+
+    <title>Purism-EV</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui.css"
+    />
+  </head>
+  <body>
+    <div id="swagger-ui"></div>
+    <script
+      src="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-bundle.js"
+      crossorigin
+    ></script>
+    <script>
+      window.onload = () => {
+        window.ui = SwaggerUIBundle({
+          url: "https://apidocs.purism-ev.cloud/public/api.json",
+          dom_id: "#swagger-ui",
+        });
+      };
+    </script>
+  </body>
+</html>
