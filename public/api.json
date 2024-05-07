@@ -8,6 +8,12 @@
     },
     "version": "1.0.0"
   },
+  "servers": [
+    {
+      "url": "https://purism-ev.cloud/api",
+      "description": "Production server"
+    }
+  ],
   "tags": [
     {
       "name": "default",
