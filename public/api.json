@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "https://purism-ev.cloud/api",
+      "url": "https://purism-ev.cloud",
       "description": "Production server"
     }
   ],
