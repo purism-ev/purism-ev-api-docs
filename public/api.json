@@ -11,21 +11,12 @@
   "servers": [
     {
       "url": "https://purism-ev.cloud",
-      "description": "Production server"
-    }
-  ],
-  "tags": [
-    {
-      "name": "default",
-      "description": ""
+      "description": "API server"
     }
   ],
   "paths": {
     "/api/ext/measurements": {
       "get": {
-        "tags": [
-          "default"
-        ],
         "summary": "Finds sensor measurements by device ID",
         "operationId": "findMeasurements",
         "parameters": [
@@ -34,6 +25,7 @@
             "in": "query",
             "description": "Device ID to filter by",
             "required": true,
+            "style": "form",
             "explode": true,
             "schema": {
               "type": "number"
@@ -44,6 +36,7 @@
             "in": "query",
             "description": "Start timestamp to filter by",
             "required": true,
+            "style": "form",
             "explode": true,
             "schema": {
               "type": "number"
@@ -54,16 +47,7 @@
             "in": "query",
             "description": "End timestamp to filter by",
             "required": true,
-            "explode": true,
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Limit the number of results",
-            "required": false,
+            "style": "form",
             "explode": true,
             "schema": {
               "type": "number"
@@ -76,26 +60,27 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Measurement"
-                  }
+                  "$ref": "#/components/schemas/inline_response_200"
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid ID value",
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Invalid device ID provided"
-                    }
-                  }
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_401"
                 }
               }
             }
@@ -122,45 +107,74 @@
             "type": "number",
             "example": 3317583342
           },
-          "Timestamp": {
+          "timestamp": {
             "type": "number",
             "example": 1712973411
           },
-          "BatterySOC": {
+          "batterySOC": {
             "type": "number",
             "example": 0
           },
-          "Power": {
+          "voltage": {
             "type": "number",
             "example": 0
           },
-          "Voltage": {
+          "position_LAT": {
             "type": "number",
             "example": 0
           },
-          "Distance": {
+          "position_LNG": {
             "type": "number",
             "example": 0
           },
-          "Motor_Speed": {
+          "position_ALT": {
             "type": "number",
             "example": 0
+          }
+        }
+      },
+      "inline_response_200": {
+        "type": "object",
+        "properties": {
+          "from_timestamp": {
+            "type": "number"
           },
-          "Throttle_In_Percentage": {
-            "type": "number",
-            "example": 0
+          "from_measurement": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Measurement"
+            }
           },
-          "Position_LAT": {
-            "type": "number",
-            "example": 0
+          "to_timestamp": {
+            "type": "number"
           },
-          "Position_LNG": {
-            "type": "number",
-            "example": 0
-          },
-          "Position_ALT": {
-            "type": "number",
-            "example": 0
+          "to_measurement": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Measurement"
+            }
+          }
+        }
+      },
+      "inline_response_400": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "enum": [
+              "Missing or invalid `device_id` parameter",
+              "Missing or invalid `from_timestamp` parameter",
+              "Missing or invalid `to_timestamp` parameter"
+            ]
+          }
+        }
+      },
+      "inline_response_401": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Missing or invalid authentication credentials"
           }
         }
       }
