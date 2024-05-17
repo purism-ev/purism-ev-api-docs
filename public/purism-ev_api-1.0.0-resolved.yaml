@@ -1,0 +1,108 @@
+---
+openapi: 3.0.3
+info:
+  title: Purism-EV API
+  description: ""
+  contact:
+    email: service@purism-ev.com
+  version: 1.0.0
+servers:
+- url: https://purism-ev.cloud
+  description: API server
+paths:
+  /api/ext/measurements:
+    get:
+      summary: Find measurements by device ID
+      operationId: findMeasurements
+      parameters:
+      - name: device_id
+        in: query
+        description: Device ID to filter by
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: number
+      - name: timestamp
+        in: query
+        description: Start timestamp to filter by
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: number
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+      security:
+      - api_key: []
+components:
+  schemas:
+    Measurement:
+      type: object
+      properties:
+        deviceId:
+          type: number
+          example: 3317583342
+        timestamp:
+          type: number
+          example: 1712973411
+        batterySOC:
+          type: number
+          example: 0
+        voltage:
+          type: number
+          example: 0
+        position_LAT:
+          type: number
+          example: 0
+        position_LNG:
+          type: number
+          example: 0
+        position_ALT:
+          type: number
+          example: 0
+    inline_response_200:
+      type: object
+      properties:
+        timestamp:
+          type: number
+        measurement:
+          type: array
+          items:
+            $ref: '#/components/schemas/Measurement'
+    inline_response_400:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - Missing or invalid `device_id` parameter
+          - Missing or invalid `timestamp` parameter
+    inline_response_401:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Missing or invalid authentication credentials
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header

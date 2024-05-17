@@ -88,10 +88,6 @@
       "Measurement": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "example": "lCQ0RHRQHm0DdA5jNa82"
-          },
           "deviceId": {
             "type": "number",
             "example": 3317583342
