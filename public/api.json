@@ -17,7 +17,7 @@
   "paths": {
     "/api/ext/measurements": {
       "get": {
-        "summary": "Finds sensor measurements by device ID",
+        "summary": "Find measurements by device ID",
         "operationId": "findMeasurements",
         "parameters": [
           {
@@ -32,20 +32,9 @@
             }
           },
           {
-            "name": "from_timestamp",
+            "name": "timestamp",
             "in": "query",
             "description": "Start timestamp to filter by",
-            "required": true,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "to_timestamp",
-            "in": "query",
-            "description": "End timestamp to filter by",
             "required": true,
             "style": "form",
             "explode": true,
@@ -136,19 +125,10 @@
       "inline_response_200": {
         "type": "object",
         "properties": {
-          "from_timestamp": {
+          "timestamp": {
             "type": "number"
           },
-          "from_measurement": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Measurement"
-            }
-          },
-          "to_timestamp": {
-            "type": "number"
-          },
-          "to_measurement": {
+          "measurement": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Measurement"
@@ -163,8 +143,7 @@
             "type": "string",
             "enum": [
               "Missing or invalid `device_id` parameter",
-              "Missing or invalid `from_timestamp` parameter",
-              "Missing or invalid `to_timestamp` parameter"
+              "Missing or invalid `timestamp` parameter"
             ]
           }
         }
