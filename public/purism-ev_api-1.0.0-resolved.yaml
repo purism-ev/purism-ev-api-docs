@@ -12,7 +12,7 @@ servers:
 paths:
   /api/ext/measurements:
     get:
-      summary: Find measurements by device ID
+      summary: Find measurements by device ID and timestamp
       operationId: findMeasurements
       parameters:
       - name: device_id
@@ -25,7 +25,7 @@ paths:
           type: number
       - name: timestamp
         in: query
-        description: Start timestamp to filter by
+        description: Timestamp to filter by
         required: true
         style: form
         explode: true
@@ -57,7 +57,7 @@ components:
     Measurement:
       type: object
       properties:
-        deviceId:
+        device_id:
           type: number
           example: 3317583342
         timestamp:
