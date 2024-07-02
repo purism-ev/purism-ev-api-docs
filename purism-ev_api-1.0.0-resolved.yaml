@@ -52,6 +52,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_401'
+      security:
+      - api_key: []
   /api/ext/measurements/interval:
     get:
       summary: Find measurements by device ID during an interval
