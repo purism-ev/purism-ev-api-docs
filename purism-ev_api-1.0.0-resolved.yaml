@@ -9,101 +9,101 @@ info:
     email: service@purism-ev.com
   version: 1.0.0
 servers:
-- url: https://purism-ev.cloud
-  description: API server
+  - url: https://purism-ev.cloud
+    description: API server
 paths:
   /api/ext/measurements:
     get:
       summary: Find measurements by device ID and timestamp
       operationId: findMeasurements
       parameters:
-      - name: device_id
-        in: query
-        description: Device ID to filter by
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: number
-      - name: timestamp
-        in: query
-        description: Timestamp to filter by
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: number
+        - name: device_id
+          in: query
+          description: Device ID to filter by
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: number
+        - name: timestamp
+          in: query
+          description: Timestamp to filter by
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: number
       responses:
         "200":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200'
+                $ref: "#/components/schemas/inline_response_200"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_400'
+                $ref: "#/components/schemas/inline_response_400"
         "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_401'
+                $ref: "#/components/schemas/inline_response_401"
       security:
-      - api_key: []
+        - api_key: []
   /api/ext/measurements/interval:
     get:
       summary: Find measurements by device ID during an interval
       operationId: findMeasurementsByInterval
       parameters:
-      - name: device_id
-        in: query
-        description: Device ID to filter by
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: number
-      - name: from_timestamp
-        in: query
-        description: From timestamp to filter by
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: number
-      - name: to_timestamp
-        in: query
-        description: To timestamp to filter by
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: number
+        - name: device_id
+          in: query
+          description: Device ID to filter by
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: number
+        - name: from_timestamp
+          in: query
+          description: From timestamp to filter by
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: number
+        - name: to_timestamp
+          in: query
+          description: To timestamp to filter by
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: number
       responses:
         "200":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_1'
+                $ref: "#/components/schemas/inline_response_200_1"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_400_1'
+                $ref: "#/components/schemas/inline_response_400_1"
         "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_401'
+                $ref: "#/components/schemas/inline_response_401"
       security:
-      - api_key: []
+        - api_key: []
 components:
   schemas:
     Measurement:
@@ -138,15 +138,15 @@ components:
         measurement:
           type: array
           items:
-            $ref: '#/components/schemas/Measurement'
+            $ref: "#/components/schemas/Measurement"
     inline_response_400:
       type: object
       properties:
         error:
           type: string
           enum:
-          - Missing or invalid `device_id` parameter
-          - Missing or invalid `timestamp` parameter
+            - Missing or invalid `device_id` parameter
+            - Missing or invalid `timestamp` parameter
     inline_response_401:
       type: object
       properties:
@@ -161,13 +161,13 @@ components:
         from_measurement:
           type: array
           items:
-            $ref: '#/components/schemas/Measurement'
+            $ref: "#/components/schemas/Measurement"
         to_timestamp:
           type: number
         to_measurement:
           type: array
           items:
-            $ref: '#/components/schemas/Measurement'
+            $ref: "#/components/schemas/Measurement"
         distance:
           type: number
     inline_response_400_1:
@@ -176,9 +176,9 @@ components:
         error:
           type: string
           enum:
-          - Missing or invalid `device_id` parameter
-          - Missing or invalid `from_timestamp` parameter
-          - Missing or invalid `to_timestamp` parameter
+            - Missing or invalid `device_id` parameter
+            - Missing or invalid `from_timestamp` parameter
+            - Missing or invalid `to_timestamp` parameter
   securitySchemes:
     api_key:
       type: apiKey
