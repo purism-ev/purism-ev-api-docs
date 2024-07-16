@@ -7,7 +7,7 @@ info:
     name: Purism-EV
     url: https://www.purism-ev.com/#contact
     email: service@purism-ev.com
-  version: 1.0.0
+  version: 1.0.1
 servers:
   - url: https://purism-ev.cloud
     description: API server
