@@ -28,7 +28,7 @@ paths:
         - name: timestamp
           in: query
           description: Timestamp to filter by
-          required: true
+          required: false
           style: form
           explode: true
           schema:
