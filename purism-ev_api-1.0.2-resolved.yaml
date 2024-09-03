@@ -214,7 +214,6 @@ components:
         device_ids:
           type: array
           description: Device IDs to filter by
-          required: true
           items:
             type: number
         timestamp:
