@@ -1,0 +1,235 @@
+openapi: 3.0.3
+info:
+  title: Purism-EV API
+  description: ""
+  contact:
+    name: Purism-EV
+    url: https://www.purism-ev.com/#contact
+    email: service@purism-ev.com
+  version: 1.0.2
+servers:
+  - url: https://purism-ev.cloud
+    description: API server
+paths:
+  /api/ext/measurements:
+    get:
+      summary: Find measurements by device ID and timestamp
+      operationId: findMeasurements
+      parameters:
+        - name: device_id
+          in: query
+          description: Device ID to filter by
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: number
+        - name: timestamp
+          in: query
+          description: Timestamp to filter by
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_200"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_400"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_401"
+  /api/ext/measurements/interval:
+    get:
+      summary: Find measurements by device ID during an interval
+      operationId: findMeasurementsByInterval
+      parameters:
+        - name: device_id
+          in: query
+          description: Device ID to filter by
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: number
+        - name: from_timestamp
+          in: query
+          description: From timestamp to filter by
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: number
+        - name: to_timestamp
+          in: query
+          description: To timestamp to filter by
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_200_1"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_400_1"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_401"
+      security:
+        - api_key: []
+  /api/ext/measurements/proximity:
+    post:
+      summary: Find the last measurements for devices
+      operationId: findMeasurementsByProximity
+      requestBody:
+        description: List of device IDs and an optional timestamp to filter by
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/measurements_proximity_body"
+        required: true
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_200"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_400_2"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_401"
+      security:
+        - api_key: []
+components:
+  schemas:
+    Measurement:
+      type: object
+      properties:
+        device_id:
+          type: number
+          example: 3317583342
+        timestamp:
+          type: number
+          example: 1712973411
+        batterySOC:
+          type: number
+          example: 0
+        voltage:
+          type: number
+          example: 0
+        position_LAT:
+          type: number
+          example: 0
+        position_LNG:
+          type: number
+          example: 0
+        position_ALT:
+          type: number
+          example: 0
+    inline_response_200:
+      type: object
+      properties:
+        timestamp:
+          type: number
+        measurements:
+          type: array
+          items:
+            $ref: "#/components/schemas/Measurement"
+    inline_response_400:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+            - Missing or invalid `device_id` parameter
+            - Missing or invalid `timestamp` parameter
+    inline_response_401:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Missing or invalid authentication credentials
+    inline_response_200_1:
+      type: object
+      properties:
+        from_timestamp:
+          type: number
+        from_measurement:
+          type: array
+          items:
+            $ref: "#/components/schemas/Measurement"
+        to_timestamp:
+          type: number
+        to_measurement:
+          type: array
+          items:
+            $ref: "#/components/schemas/Measurement"
+        distance:
+          type: number
+    inline_response_400_1:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+            - Missing or invalid `device_id` parameter
+            - Missing or invalid `from_timestamp` parameter
+            - Missing or invalid `to_timestamp` parameter
+    measurements_proximity_body:
+      type: object
+      properties:
+        device_ids:
+          type: array
+          description: Device IDs to filter by
+          required: true
+          items:
+            type: number
+        timestamp:
+          type: number
+          description: Timestamp to filter by
+    inline_response_400_2:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+            - Missing or invalid `device_ids` parameter
+            - Missing or invalid `timestamp` parameter
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
