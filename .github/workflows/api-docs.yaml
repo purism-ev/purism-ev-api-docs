@@ -43,3 +43,10 @@ jobs:
           git add docs/index.html
           git commit -m "Update API docs"
           git push origin main
+
+      - name: Create a Pull Request
+        run: >
+          gh pr create -B gh-pages -H main-${{ github.run_id }}
+          --title 'update api docs from main-${{ github.run_id }}'
+          --body ' '
+          --reviewer victorfu
