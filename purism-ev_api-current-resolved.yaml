@@ -135,7 +135,7 @@ paths:
         - api_key: []
   /api/ext/devices/unlock:
     post:
-      summary: Send an unlock action to the device
+      summary: Send an unlock action to a device
       operationId: unlockAction
       requestBody:
         description: Device ID to receive the unlock action
