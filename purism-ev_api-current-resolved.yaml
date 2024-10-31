@@ -53,7 +53,7 @@ paths:
                 $ref: "#/components/schemas/inline_response_401"
   /api/ext/measurements/interval:
     get:
-      summary: Find measurements by device ID during an interval
+      summary: Find measurements by Device ID during an interval
       operationId: findMeasurementsByInterval
       parameters:
         - name: device_id
