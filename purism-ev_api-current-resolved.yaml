@@ -106,7 +106,7 @@ paths:
       summary: Find the last measurements for devices
       operationId: findMeasurementsByProximity
       requestBody:
-        description: List of Device IDs and an optional timestamp to filter by
+        description: Device IDs and an optional timestamp to filter by
         content:
           application/json:
             schema:
