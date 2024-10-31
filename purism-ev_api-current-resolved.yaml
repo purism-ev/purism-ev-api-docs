@@ -13,7 +13,7 @@ servers:
 paths:
   /api/ext/measurements:
     get:
-      summary: Find measurements by device ID and timestamp
+      summary: Find measurements by Device ID and timestamp
       operationId: findMeasurements
       parameters:
         - name: device_id
@@ -106,7 +106,7 @@ paths:
       summary: Find the last measurements for devices
       operationId: findMeasurementsByProximity
       requestBody:
-        description: List of device IDs and an optional timestamp to filter by
+        description: List of Device IDs and an optional timestamp to filter by
         content:
           application/json:
             schema:
