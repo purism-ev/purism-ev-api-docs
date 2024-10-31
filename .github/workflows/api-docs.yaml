@@ -32,7 +32,9 @@ jobs:
         run: npm install -g @redocly/cli
 
       - name: Generate API docs
-        run: npx @redocly/cli build-docs ./purism-ev_api-current-resolved.yaml --output=./docs/index.html
+        run: |
+          npx @redocly/cli build-docs ./purism-ev_api-current-resolved.yaml --output=index.html
+          mv index.html docs/index.html
 
       - name: Commit and push changes
         run: |
