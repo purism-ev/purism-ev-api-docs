@@ -8,7 +8,7 @@ info:
     email: service@purism-ev.com
   version: 1.0.3
 servers:
-  - url: https://purism-ev.cloud
+  - url: https://app.purism-ev.com
     description: API server
 paths:
   /api/ext/measurements:
