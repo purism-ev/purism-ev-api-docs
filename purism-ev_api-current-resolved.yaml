@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Purism-EV API
-  description: ""
+  description: API documentation for Purism-EV
   contact:
     name: Purism-EV
     url: https://www.purism-ev.com/#contact
